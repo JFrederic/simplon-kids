@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+
+<h1 class="text-center">Homepage</h1>
+
+    <ul class="list-group">
+        {% for user in users  %}
+            <li class="list-group-item">{{ user.lastname }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
