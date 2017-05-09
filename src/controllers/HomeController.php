@@ -12,7 +12,7 @@ use App\model\User;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
-class HomeController extends Controller
+class HomeController
 {
 
 
@@ -23,15 +23,7 @@ class HomeController extends Controller
      */
     public function home(Request $request, Application $app)
     {
-        $vehicle= new Vehicle($app);
-        $vehicles = $vehicle->findAll();
-        $listOfVehicles = $this->data['vehicle'];
 
-        foreach ($vehicles as $vehicle) {
-            $listOfVehicle[] = $vehicle;
-        }
-        return $app['twig']->render('homepage.html.twig',array(
-            'users' => $listOfVehicle,
-        ));
+        return $app['twig']->render('homepage.html.twig');
     }
 }

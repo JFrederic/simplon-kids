@@ -1,1 +1,1 @@
-# silex-app
+# Simplon_kids app
