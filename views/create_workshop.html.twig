@@ -1,0 +1,88 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <form method="post" action="/create/workshop">
+                <div class="form-group">
+                    <label for="title">titre</label>
+                    <input type="text" name="title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="description">description</label>
+                    <textarea name="description" id="" cols="30" rows="10"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="price">prix</label>
+                    <input type="number" step="0.01" name="price" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="max_kids">Nombres d'enfants maximum</label>
+                    <input type="number" name="max_kids" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="btn btn-default btn-file">
+                        Choisir une image <input type="file" name="image" hidden>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="visible">Visible</label>
+                    <input type="checkbox" name="visible" class="form-control">
+                </div>
+                <div class="form-group">
+                    <select name="public_age_id" class="form-control mini-select">
+                        <option value="" selected>Tranche d'âge</option>
+                        {% for age in ages %}
+                            <option value="{{ age.id }}">{{ age.start }}-{{ age.end }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select name="establishment_id" class="form-control mini-select">
+                        <option value="" selected>Établissement</option>
+                        {% for establishment in establishments %}
+                            <option value="{{ establishment.id }}">{{ establishment.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select name="workshop_category_id" class="form-control mini-select">
+                        <option value="" selected>Catégorie</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class='col-md-5'>
+                        <div class="form-group">
+                            <label for="startAt">Date de début</label>
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type='text' name="startAt" class="form-control"/>
+                                <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-md-5'>
+                        <div class="form-group">
+                            <label for="startAt">Date de fin</label>
+                            <div class='input-group date' id='datetimepicker2'>
+                                <input type='text' name="endAt" class="form-control"/>
+                                <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="Créer un atelier" class="btn btn-success">
+
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

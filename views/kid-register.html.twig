@@ -1,0 +1,86 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h2>Inscrire ses enfants</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.</p>
+        </div>
+        <div class="row">
+            <form method="post" action="/register">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="parent_lastname" placeholder="Nom du parent*"  required>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="parent_firstname" placeholder="Prénom du parent*" required>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="email" name="email" placeholder="Email*" required>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="workshop_name" id="">
+                            <option value="">Ateliers</option>
+                            {% for workshop in workshops %}
+                                <option value="{{ workshop.id }}">{{ workshop.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="address" placeholder="Adresse">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="complement" placeholder="Complément d'addresse">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="city" placeholder="Ville">
+                        <input class="form-control" type="text" name="zipcode" placeholder="Code postale">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="telephone" placeholder="Téléphone">
+                    </div>
+                    <h3>Enfant 1</h3>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="kid_lastname" placeholder="Nom enfant 1">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="kid_firstname" placeholder="Prenom enfant 1">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="date" name="birthday" placeholder="Prenom enfant 1">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="classroom" placeholder="Classe">
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <img src="images/Workshop1.jpg" alt="" height="412px">
+                    <h3>Enfant 2</h3>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="kid_lastname2" placeholder="Nom enfant 2">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="kid_firstname2" placeholder="Prenom enfant 2">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="date" name="birthday2" placeholder="Prenom enfant 2">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="classroom2" placeholder="Classe">
+                    </div>
+
+                </div>
+
+                <input type="submit" class="btn btn-success" value="Inscrire">
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

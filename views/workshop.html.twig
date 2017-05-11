@@ -1,0 +1,70 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="form-group text-center form-inline">
+                <form method="post" id="filter" action="/workshops">
+                    <label for="vehicule">Trier par : </label>
+                    <select name="public_age" onchange="document.getElementById('filter').submit()"
+                            class="form-control mini-select">
+                        <option value="" selected>Tranche d'âge</option>
+                        {% for age in ages %}
+                            <option value="{{ age.id }}">{{ age.start }}-{{ age.end }} ans</option>
+                        {% endfor %}
+                    </select>
+
+                    <select name="category" class="form-control mini-select"
+                            onchange="document.getElementById('filter').submit()">
+                        <option value="" selected>Catégories</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select name="place" class="form-control mini-select"
+                            onchange="document.getElementById('filter').submit()">
+                        <option value="" selected>Lieux</option>
+                        {% for place in establishments %}
+                            <option value="{{ place.id }}">{{ place.city }}</option>
+                        {% endfor %}
+                    </select>
+
+                </form>
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            {% for workshop in workshops %}
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <img src="/images/{{ workshop.image }}" alt="img">
+                        <div class="caption">
+                            <h3 class="text-center">{{ workshop.title }}</h3>
+                            <p>{{ workshop.description }}</p>
+                            <p>{{ workshop.establishment }} {{ workshop.city }}</p>
+                            <p>{{ workshop.startAt }}</p>
+                            <p>{{ workshop.start }}-{{ workshop.end }} ans {{ workshop.price }} €</p>
+                            <ul class="list-inline">
+                                <li ><a href="#" class="btn btn-primary" role="button">Inscrire</a></li>
+                                <li><a href="/edit/{{ workshop.id }}" role="button"><span class="glyphicon glyphicon-edit"></span></a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <p class="text-center">
+        <a href="/create/workshop" class="btn btn-lg btn-primary ">Créer un atelier</a>
+    </p>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+    </script>
+{% endblock %}
