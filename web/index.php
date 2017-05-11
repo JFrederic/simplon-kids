@@ -18,7 +18,20 @@ $app->register(new Silex\Provider\TwigServiceProvider());
 
 require __DIR__.'/../config/prod.php';
 
-$app->get('/', 'App\controllers\HomeController::home');
+$app->get('/', 'simplonkids\controllers\HomeController::home');
+$app->get('/workshops', 'simplonkids\controllers\WorkshopController::show');
+//$app->match('/workshops', 'simplonkids\controllers\WorkshopController::getWorkshopByPublicAge');
+$app->match('/create/workshop', 'simplonkids\controllers\WorkshopController::create');
+$app->match('/edit/{id}', 'simplonkids\controllers\WorkshopController::edit');
+$app->match('/register' , 'simplonkids\controllers\KidregisterController::create');
+$app->get('/faq', function() use($app) {
+
+    return $app['twig']->render('faq.html.twig');
+});
+$app->get('/contact', function() use($app) {
+
+    return $app['twig']->render('contact.html.twig');
+});
 
 
 

@@ -6,10 +6,9 @@
  * Time: 10:34
  */
 
-namespace App\controllers;
-use App\classes\Controller;
-use App\model\User;
+namespace simplonkids\controllers;
 use Silex\Application;
+use simplonkids\model\Workshop;
 use Symfony\Component\HttpFoundation\Request;
 
 class HomeController
@@ -21,9 +20,13 @@ class HomeController
      * @param Application $app
      * @return string
      */
-    public function home(Request $request, Application $app)
+    public function home(Application $app)
     {
+        $workshop = new Workshop();
+        $workshops = $workshop->findAll();
 
-        return $app['twig']->render('homepage.html.twig');
+        return $app['twig']->render('homepage.html.twig',array(
+            'workshops' => $workshops,
+        ));
     }
 }

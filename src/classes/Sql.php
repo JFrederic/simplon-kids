@@ -6,7 +6,7 @@
  * Time: 18:24
  */
 
-namespace App\classes;
+namespace simplonkids\classes;
 use PDO;
 use PDOException;
 
@@ -15,8 +15,8 @@ abstract class Sql
 {
     public $hostname = 'localhost';
     public $db_username = 'root';
-    public $db_password = 'simplon974';
-    public $db_name = 'tavoiture';
+    public $db_password = '';
+    public $db_name = 'simplonkids';
     public $connection;
 
     /**
@@ -46,7 +46,7 @@ abstract class Sql
 
     public function lastId()
     {
-        return $this->connection->lastInserId();
+        return $this->connection->lastInsertId();
     }
 
 

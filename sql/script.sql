@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `parent` (
   firstname VARCHAR(255) NOT NULL,
   lastname VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
+  telephone VARCHAR(255) NOT NULL,
   address_id INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT `fk_parent_address`
@@ -79,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `workshop` (
   id INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
-  price DECIMAL NOT NULL,
+  price DECIMAL(5,2) NOT NULL,
   max_kids INT NOT NULL,
   image VARCHAR(255),
   visible TINYINT,
@@ -103,6 +104,7 @@ CREATE TABLE IF NOT EXISTS `workshop_has_kid` (
   workshop_id INT NOT NULL,
   kid_id INT NOT NULL,
   has_participated TINYINT,
+  validated TINYINT,
   CONSTRAINT `fk_workshop_kid`
     FOREIGN KEY (workshop_id)
     REFERENCES `workshop`(id),
@@ -145,11 +147,11 @@ INSERT INTO `address`(address,complement,city,zipcode) VALUES
 
 -- parent table data
 
-INSERT INTO `parent`(firstname,lastname,email,address_id) VALUES
-("Marine","Grondin","marinegrondin@gmail.com",3),
-("Patrick","Riviere","patrickriviere@gmail.com",2),
-("Ceinture","Kaporal","ceinturekaporal@gmail.com",4),
-("Pierre","Boyer","pierreboyer@gmail.com",1);
+INSERT INTO `parent`(firstname,lastname,email,telephone,address_id) VALUES
+("Marine","Grondin","marinegrondin@gmail.com","0692568547",3),
+("Patrick","Riviere","patrickriviere@gmail.com","0692647925",2),
+("Ceinture","Kaporal","ceinturekaporal@gmail.com","0692368159",4),
+("Pierre","Boyer","pierreboyer@gmail.com","0692221145",1);
 
 -- kid_has_parent table data
 
@@ -162,30 +164,30 @@ INSERT INTO `kid_has_parent`(kid_id,parent_id) VALUES
 -- public age table data
 
 INSERT INTO `public_age`(start,`end`) VALUES
-(6,10),
-(10,13),
-(6,14);
+(4,8),
+(8,12),
+(12,16);
 
 
 -- establishment table data
 
 INSERT INTO `establishment`(`name`,address_id) VALUES
-("Paul Éluard",5);
+("Simplon Reunion",5);
 
 -- workshop category table data
 
 INSERT INTO `workshop_category`(name) VALUES
-("Bronze"),
-("Silver"),
-("Gold"),
-("Challenger");
+("Debutant"),
+("Intermediaire"),
+("Difficile"),
+("Insane");
 
 -- workshop table data
 
 INSERT INTO `workshop`(title,description,price,max_kids,image,visible,public_age_id,establishment_id,workshop_category_id) VALUES
-("Code combat","Jeux de rôles ou l'on doit faire évoluer l'adversaire dans un donjon grâce à des ligne de code",9.99,,30,"",0,2,1,3),
-("Scratch","Minecraft",20,15,"",0,1,1,1),
-("Algo","Ecrire un algoritme qui résout un énoncé donné(lvl surdoué)",20,10,"",0,1,1,4);
+("Code combat","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",9.99,30,"Workshop1.jpg",0,2,1,3),
+("Scratch","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",20,15,"Workshop1.jpg",0,1,1,1),
+("Algo","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",20,10,"Workshop1.jpg",0,1,1,4);
 
 -- timetable table data
 
@@ -196,10 +198,10 @@ INSERT INTO `timetable`(startAt,endAt,`enable`,workshop_id) VALUES
 
 -- workshop_has_kids table data
 
-INSERT INTO `workshop_has_kid`(workshop_id,kid_id) VALUES
-(1,2),
-(2,4),
-(3,1);
+INSERT INTO `workshop_has_kid`(workshop_id,kid_id,has_participated,validated) VALUES
+(1,2,0,0),
+(2,4,0,0),
+(3,1,0,0);
 
 
 

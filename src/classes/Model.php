@@ -6,16 +6,13 @@
  * Time: 20:25
  */
 
-namespace App\classes;
+namespace simplonkids\classes;
 
 class Model extends Sql
 {
-    public $app;
-
-    public function __construct($app)
+    public function __construct()
     {
         parent::getConnection();
-        $this->app = $app;
     }
 
 
