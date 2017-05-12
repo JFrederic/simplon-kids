@@ -1,39 +1,37 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
-    {#<div id="myCarousel" class="carousel slide" data-ride="carousel">#}
-        {#<!-- Indicators -->#}
-        {#<ol class="carousel-indicators">#}
-            {#<li data-target="#myCarousel" data-slide-to="0" class="active"></li>#}
-            {#<li data-target="#myCarousel" data-slide-to="1"></li>#}
-            {#<li data-target="#myCarousel" data-slide-to="2"></li>#}
-        {#</ol>#}
+    <div id="myCarousel" class="carousel slide margin-top90" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+        </ol>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img class="img-responsive center-block" src="/images/laptop-1280536_1920.jpg"  alt="Kid Computer">
+            </div>
+            <div class="item">
+                <img class="img-responsive center-block" src="/images/laptop-1280536_1920.jpg"  alt="Kid Computer">
+            </div>
+            <div class="item">
+                <img class="img-responsive center-block" src="/images/laptop-1280536_1920.jpg"  alt="Kid Computer">
+            </div>
+        </div>
 
-        {#<!-- Wrapper for slides -->#}
-        {#<div class="carousel-inner">#}
-            {#<div class="item active">#}
-                {#<img src="images/la.jpg" alt="Los Angeles">#}
-            {#</div>#}
-
-            {#<div class="item">#}
-                {#<img src="images/chicago.jpg" alt="Chicago">#}
-            {#</div>#}
-
-            {#<div class="item">#}
-                {#<img src="images/ny.jpg" alt="New York">#}
-            {#</div>#}
-        {#</div>#}
-
-        {#<!-- Left and right controls -->#}
-        {#<a class="left carousel-control" href="#myCarousel" data-slide="prev">#}
-            {#<span class="glyphicon glyphicon-chevron-left"></span>#}
-            {#<span class="sr-only">Previous</span>#}
-        {#</a>#}
-        {#<a class="right carousel-control" href="#myCarousel" data-slide="next">#}
-            {#<span class="glyphicon glyphicon-chevron-right"></span>#}
-            {#<span class="sr-only">Next</span>#}
-        {#</a>#}
-    {#</div>#}
-    <div class="container">
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <div class="container home">
         <div class="row">
             <h2>Simplon kids</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -45,10 +43,10 @@
                 <div class="thumbnail">
                     <img src="/images/{{ workshop.image }}" alt="img">
                     <div class="caption">
-                        <h3 class="text-center" >Initiation robotique</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab assumenda aut dolor ea eius est inventore ipsa itaque molestias nihil, numquam pariatur, placeat quae quis, ratione sit veniam voluptates voluptatum.</p>
+                        <h3 class="text-center" >{{ workshop.title }}</h3>
+                        <p>{{ workshop.description|slice(0,100) }}</p>
                         <p>{{ workshop.startAt }}</p>
-                        <p>{{ workshop.start }}-{{ workshop.end }} ans {{ workshop.price }}</p>
+                        <p>{{ workshop.start }}-{{ workshop.end }} ans <span class="pull-right">{{ workshop.price }} €</span></p>
                         <p class="text-center"><a href="/register" class="btn btn-primary" role="button">Inscrire</a> </p>
                     </div>
                 </div>

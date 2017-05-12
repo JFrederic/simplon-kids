@@ -13,6 +13,24 @@ use simplonkids\classes\Model;
 
 class Kid extends Model
 {
+    public $id;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function addKid($kid) {
         $sql = 'INSERT INTO kid(firstname, lastname, birthday, classroom) VALUES(:firstname,:lastname,:birthday,:classroom)';
         $arguments = [
@@ -21,8 +39,8 @@ class Kid extends Model
             ':birthday' => $kid['birthday'],
             ':classroom' => $kid['classroom'],
         ];
-
         $stmt = $this->prepareExecute($sql,$arguments);
+        $this->setId($this->lastId());
 
     }
 }

@@ -11,7 +11,7 @@ class KidTest extends \PHPUnit\Framework\TestCase
 
     private $connection;
 
-    public function testGetConnection()
+    public function getConnection()
     {
         try {
             $this->connection = new PDO('mysql:host=localhost;dbname=simplonkids', 'root', '');
@@ -20,23 +20,20 @@ class KidTest extends \PHPUnit\Framework\TestCase
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
         }
-        $this->assertNotNull($this->connection);
         return $this->connection;
     }
 
     public function testInsertKid(){
-        $database = $this->testGetConnection();
-        $sql = 'INSERT INTO kid(firstname, lastname, birthday, classroom) VALUES(:firstname,:lastname,:birthday,:classroom)';
+        $database = $this->getConnection();
         $kids_arguments = [
-            ':firstname' => "fred",
-            ':lastname' => "jouan",
-            ':birthday' => "1995-05-24",
-            ':classroom' => "CP1",
+            'kid_firstname' => "fred",
+            'kid_lastname' => "jouan",
+            'birthday' => "1995-05-24",
+            'classroom' => "CP1",
         ];
-
-        $queryTable = $database->prepare($sql);
-        $queryTable->execute($kids_arguments);
-        $lastId = $database->lastInsertId();
+        $kid = new \simplonkids\model\Kid();
+        $kid->addKid($kids_arguments);
+        $lastId = $kid->lastId();
         $expected = [
             'id' => $lastId,
             'firstname' => "fred",
@@ -45,17 +42,17 @@ class KidTest extends \PHPUnit\Framework\TestCase
             'classroom' => "CP1",
         ];
 
-        $sql2 = 'SELECT * FROM kid WHERE :id = id';
+        $sql = 'SELECT * FROM kid WHERE :id = id';
         $arguments = [
             ':id' => $lastId
         ];
-        $query = $database->prepare($sql2);
+        $query = $database->prepare($sql);
         $query->execute($arguments);
         $results = $query->fetch(PDO::FETCH_ASSOC);
         $this->assertEquals($expected,$results);
 
-        $sql3 = 'DELETE FROM kid WHERE :id = id';
-        $delete = $database->prepare($sql3);
+        $sql = 'DELETE FROM kid WHERE :id = id';
+        $delete = $database->prepare($sql);
         $delete->execute($arguments);
     }
 

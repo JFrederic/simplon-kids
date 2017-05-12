@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" style="margin-top: 120px;">
         <div class="row">
             <h2>Inscrire ses enfants</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -14,16 +14,16 @@
             <form method="post" action="/register">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input class="form-control" type="text" name="parent_lastname" placeholder="Nom du parent*"  required>
+                        <input class="form-control" type="text" name="parent_lastname" placeholder="Nom du parent*"  >
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="text" name="parent_firstname" placeholder="Prénom du parent*" required>
+                        <input class="form-control" type="text" name="parent_firstname" placeholder="Prénom du parent*" >
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="email" name="email" placeholder="Email*" required>
+                        <input class="form-control" type="email" name="email" placeholder="Email*" >
                     </div>
                     <div class="form-group">
-                        <select class="form-control" name="workshop_name" id="">
+                        <select class="form-control" name="workshop_id" id="">
                             <option value="">Ateliers</option>
                             {% for workshop in workshops %}
                                 <option value="{{ workshop.id }}">{{ workshop.title }}</option>
@@ -61,7 +61,7 @@
 
                 <div class="col-md-6">
 
-                    <img src="images/Workshop1.jpg" alt="" height="412px">
+                    <img src="images/Workshop1.jpg" class="img-responsive" alt="" style="min-height: 414px">
                     <h3>Enfant 2</h3>
                     <div class="form-group">
                         <input class="form-control" type="text" name="kid_lastname2" placeholder="Nom enfant 2">

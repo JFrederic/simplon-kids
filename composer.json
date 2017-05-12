@@ -9,7 +9,8 @@
     },
     "autoload": {
         "psr-4": {
-            "simplonkids\\": "src/"
+            "simplonkids\\": "src/",
+            "tests\\": "tests/"
         },
         "config": {
             "optimize-autoloader": true

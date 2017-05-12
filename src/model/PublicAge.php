@@ -10,6 +10,7 @@ namespace simplonkids\model;
 
 
 use simplonkids\classes\Model;
+use PDO;
 
 class PublicAge extends Model
 {
@@ -18,7 +19,7 @@ class PublicAge extends Model
         $sql = 'SELECT * FROM public_age';
 
         $stmt = $this->prepareExecute($sql,[]);
-        $results = $stmt->fetchAll();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $results;
     }

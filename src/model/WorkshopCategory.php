@@ -10,6 +10,7 @@ namespace simplonkids\model;
 
 
 use simplonkids\classes\Model;
+use PDO;
 
 class WorkshopCategory extends Model
 {
@@ -18,7 +19,7 @@ class WorkshopCategory extends Model
         $sql = 'SELECT * FROM workshop_category';
 
         $stmt = $this->prepareExecute($sql,[]);
-        $results = $stmt->fetchAll();
+        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         return $results;
     }

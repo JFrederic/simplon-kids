@@ -83,7 +83,8 @@ class WorkshopController
                 'establishment_id' => $establishment_id,
                 'workshop_category_id' => $workshop_category_id,
             ];
-            $workshop_id = $workshop->addWorkshop($workshop_param);
+             $workshop->addWorkshop($workshop_param);
+             $workshop_id = $workshop->getId();
 
             $timetable_param = [
                 'startAt' => $start,
@@ -92,6 +93,7 @@ class WorkshopController
             ];
 
             $timetable->addTimetable($timetable_param);
+            $app->redirect('/');
         }
 
         return $app['twig']->render('create_workshop.html.twig', array(
@@ -108,7 +110,7 @@ class WorkshopController
         $workshop_category = new WorkshopCategory();
         $establishment = new Establishment();
 
-        if ($request->isMethod("put")){
+        if ($request->isMethod("post")){
 
             $workshop = new Workshop();
             $timetable = new Timetable();
@@ -128,7 +130,7 @@ class WorkshopController
             if ($visible == "on"){
                 $visible = 1;
             }
-            else {
+            elseif($visible == "false") {
                 $visible = 0;
             }
 
@@ -154,7 +156,7 @@ class WorkshopController
 
             $timetable->setTimetable($timetable_param);
 
-            return $app->redirect('/workshops');
+//            $app->redirect('/');
         }
         $workshop = new Workshop();
         $edit_workshop = $workshop->findWorkshopById($id);
@@ -172,30 +174,38 @@ class WorkshopController
 
     }
 
-
-
-    public function getWorkshopByPublicAge(Request $request,Application $app){
-
-
-        if ($request->isMethod('post')){
-            $age = $request->get('public_age');
-            $workshop = new Workshop();
-            $public_age = new PublicAge();
-            $workshop_category = new WorkshopCategory();
-            $establishment = new Establishment();
-
-            $workshops = $workshop->findWorkshopByPublicAge($age);
-            $ages = $public_age->findAll();
-            $categories = $workshop_category->findAll();
-            $establishments = $establishment->findAll();
-
-            return $app['twig']->render('workshop.html.twig',array(
-                'workshops' => $workshops,
-                'ages' => $ages,
-                'categories' => $categories,
-                'establishments' => $establishments,
-            ));
-
-        }
+    public function delete(Application $app, Request $request)
+    {
+        $id = $request->get('id');
+        $workshop = new Workshop();
+        $workshop_id = $workshop->delete($id);
+        return $app->redirect('/');
     }
+
+
+
+//    public function getWorkshopByPublicAge(Request $request,Application $app){
+//
+//
+//        if ($request->isMethod('post')){
+//            $age = $request->get('public_age');
+//            $workshop = new Workshop();
+//            $public_age = new PublicAge();
+//            $workshop_category = new WorkshopCategory();
+//            $establishment = new Establishment();
+//
+//            $workshops = $workshop->findWorkshopByPublicAge($age);
+//            $ages = $public_age->findAll();
+//            $categories = $workshop_category->findAll();
+//            $establishments = $establishment->findAll();
+//
+//            return $app['twig']->render('workshop.html.twig',array(
+//                'workshops' => $workshops,
+//                'ages' => $ages,
+//                'categories' => $categories,
+//                'establishments' => $establishments,
+//            ));
+//
+//        }
+//    }
 }

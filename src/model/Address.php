@@ -13,6 +13,24 @@ use simplonkids\classes\Model;
 
 class Address extends Model
 {
+    public $id;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function addAddress($address) {
         $sql = 'INSERT INTO address(address, complement, city, zipcode) VALUES(:address,:complement,:city,:zipcode)';
         $arguments = [
@@ -24,6 +42,6 @@ class Address extends Model
 
         $stmt = $this->prepareExecute($sql,$arguments);
 
-        return $this->lastId();
+        $this->setId($this->lastId());
     }
 }

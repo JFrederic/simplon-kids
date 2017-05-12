@@ -22,23 +22,16 @@ class Workshop_categoryTest extends \PHPUnit\Framework\TestCase
         return $this->connection;
     }
 
-    public function testFindAll() {
-
-        $database = $this->getConnection();
-        $sql = 'SELECT * FROM workshop_category';
-        $queryTable = $database->prepare($sql);
-        $queryTable->execute();
-        $result = $queryTable->fetchAll(PDO::FETCH_ASSOC);
-
+    public function testFindAll()
+    {
+        $workshop_category = new \simplonkids\model\WorkshopCategory();
+        $actual = $workshop_category->findAll(PDO::FETCH_ASSOC);
         $expected = array(
             array('id' => '1','name' => 'Debutant'),
             array('id' => '2','name' => 'Intermediaire'),
             array('id' => '3','name' => 'Difficile'),
             array('id' => '4','name' => 'Insane')
         );
-
-
-        $this->assertEquals($expected, $result);
-
+        $this->assertEquals($expected, $actual);
     }
 }

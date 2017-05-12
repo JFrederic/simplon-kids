@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <div class="container">
+    <div class="container margin-top90">
         <div class="row">
             <div class="form-group text-center form-inline">
                 <form method="post" id="filter" action="/workshops">
@@ -43,13 +43,14 @@
                         <img src="/images/{{ workshop.image }}" alt="img">
                         <div class="caption">
                             <h3 class="text-center">{{ workshop.title }}</h3>
-                            <p>{{ workshop.description }}</p>
+                            <p>{{ workshop.description|slice(0,100) }}</p>
                             <p>{{ workshop.establishment }} {{ workshop.city }}</p>
                             <p>{{ workshop.startAt }}</p>
-                            <p>{{ workshop.start }}-{{ workshop.end }} ans {{ workshop.price }} €</p>
+                            <p>{{ workshop.start }}-{{ workshop.end }} ans <span class="pull-right">{{ workshop.price }} €</span></p>
+                            <p class="text-center" style="margin-top: 25px"><a href="#" class="btn btn-primary" role="button">Inscrire</a> <a href="/edit/{{ workshop.id }}" class="pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a></p>
                             <ul class="list-inline">
-                                <li ><a href="#" class="btn btn-primary" role="button">Inscrire</a></li>
-                                <li><a href="/edit/{{ workshop.id }}" role="button"><span class="glyphicon glyphicon-edit"></span></a></li>
+                                <li ></li>
+                                <li></li>
                             </ul>
 
                         </div>
@@ -59,12 +60,7 @@
         </div>
     </div>
     <p class="text-center">
-        <a href="/create/workshop" class="btn btn-lg btn-primary ">Créer un atelier</a>
+        <a href="/create/workshop" style="margin-top: 80px;" class="btn btn-lg btn-primary ">Créer un atelier</a>
     </p>
 {% endblock %}
 
-{% block javascript %}
-    <script>
-
-    </script>
-{% endblock %}
