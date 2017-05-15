@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 class WorkshopController
 {
 
-
     public function show(Application $app) {
 
         $workshop = new Workshop();
@@ -53,6 +52,7 @@ class WorkshopController
 
             $workshop = new Workshop();
             $timetable = new Timetable();
+
             $title = $request->get('title');
             $description = $request->get('description');
             $price = $request->get('price');
@@ -71,28 +71,26 @@ class WorkshopController
             else {
                 $visible = 0;
             }
+            // Add a workshop
+            $workshop->setTitle($title);
+            $workshop->setDescription($description);
+            $workshop->setPrice($price);
+            $workshop->setMaxKids($max_kids);
+            $workshop->setImage($image);
+            $workshop->setVisible($visible);
+            $workshop->setPublicAgeId($public_age_id);
+            $workshop->setEstablishmentId($establishment_id);
+            $workshop->setWorkshopCategoryId($workshop_category_id);
+            $workshop->addWorkshop();
 
-            $workshop_param = [
-                'title' => $title,
-                'description' => $description,
-                'price' => $price,
-                'max_kids' => $max_kids,
-                'image' => $image,
-                'visible' => (boolean) $visible,
-                'public_age_id' => $public_age_id,
-                'establishment_id' => $establishment_id,
-                'workshop_category_id' => $workshop_category_id,
-            ];
-             $workshop->addWorkshop($workshop_param);
-             $workshop_id = $workshop->getId();
+            // Add a timetable for a workshop
+            $workshop_id = $workshop->getId();
+            $timetable->setStartAt($start);
+            $timetable->setEndAt($end);
+            $timetable->setEnable(0);
+            $timetable->setWorkshopId($workshop_id);
+            $timetable->addTimetable();
 
-            $timetable_param = [
-                'startAt' => $start,
-                'endAt' => $end,
-                'workshop_id' => $workshop_id,
-            ];
-
-            $timetable->addTimetable($timetable_param);
             $app->redirect('/');
         }
 

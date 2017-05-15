@@ -1,4 +1,6 @@
 <?php
+namespace tests;
+use simplonkids\model\Kid;
 
 /**
  * Created by PhpStorm.
@@ -6,54 +8,32 @@
  * Date: 11/05/2017
  * Time: 13:27
  */
-class KidTest extends \PHPUnit\Framework\TestCase
+class KidTest extends Setup
 {
 
-    private $connection;
-
-    public function getConnection()
+    public $kid;
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
-        try {
-            $this->connection = new PDO('mysql:host=localhost;dbname=simplonkids', 'root', '');
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
-            die();
-        }
-        return $this->connection;
+        $this->kid = new Kid($this->getConnection());
+        parent::__construct($name, $data, $dataName);
     }
 
-    public function testInsertKid(){
-        $database = $this->getConnection();
-        $kids_arguments = [
-            'kid_firstname' => "fred",
-            'kid_lastname' => "jouan",
-            'birthday' => "1995-05-24",
-            'classroom' => "CP1",
-        ];
-        $kid = new \simplonkids\model\Kid();
-        $kid->addKid($kids_arguments);
-        $lastId = $kid->lastId();
-        $expected = [
-            'id' => $lastId,
-            'firstname' => "fred",
-            'lastname' => "jouan",
-            'birthday' => "1995-05-24",
-            'classroom' => "CP1",
-        ];
+    public function testInsertAddress(){
 
-        $sql = 'SELECT * FROM kid WHERE :id = id';
-        $arguments = [
-            ':id' => $lastId
-        ];
-        $query = $database->prepare($sql);
-        $query->execute($arguments);
-        $results = $query->fetch(PDO::FETCH_ASSOC);
-        $this->assertEquals($expected,$results);
+        $sql = 'SELECT * FROM kid';
+        $expected = count($this->prepareExecute($sql,[])->fetchAll(\PDO::FETCH_ASSOC))+1;
+
+        $this->kid->setFirstname("Robert");
+        $this->kid->setLastname("Darude");
+        $this->kid->setBirthday("1995-05-24");
+        $this->kid->setClassroom("CE2");
+        $this->kid->addKid();
+
+        $actual = count($this->prepareExecute($sql,[])->fetchAll(\PDO::FETCH_ASSOC));
+        $this->assertEquals($expected,$actual);
 
         $sql = 'DELETE FROM kid WHERE :id = id';
-        $delete = $database->prepare($sql);
-        $delete->execute($arguments);
+        $this->prepareExecute($sql,[':id' => $this->kid->getId()]);
     }
 
 

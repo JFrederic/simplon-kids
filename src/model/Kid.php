@@ -14,6 +14,25 @@ use simplonkids\classes\Model;
 class Kid extends Model
 {
     public $id;
+    public $firstname;
+    public $lastname;
+    public $birthday;
+    public $classroom;
+
+
+
+    public function addKid() {
+        $sql = 'INSERT INTO kid(firstname, lastname, birthday, classroom) VALUES(:firstname,:lastname,:birthday,:classroom)';
+        $arguments = [
+            ':firstname' => $this->getFirstname(),
+            ':lastname' => $this->getLastname(),
+            ':birthday' => $this->getBirthday(),
+            ':classroom' => $this->getClassroom(),
+        ];
+        $stmt = $this->prepareExecute($sql,$arguments);
+        $this->setId($this->lastId());
+
+    }
 
     /**
      * @return mixed
@@ -31,16 +50,67 @@ class Kid extends Model
         $this->id = $id;
     }
 
-    public function addKid($kid) {
-        $sql = 'INSERT INTO kid(firstname, lastname, birthday, classroom) VALUES(:firstname,:lastname,:birthday,:classroom)';
-        $arguments = [
-            ':firstname' => $kid['kid_firstname'],
-            ':lastname' => $kid['kid_lastname'],
-            ':birthday' => $kid['birthday'],
-            ':classroom' => $kid['classroom'],
-        ];
-        $stmt = $this->prepareExecute($sql,$arguments);
-        $this->setId($this->lastId());
+    /**
+     * @return mixed
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
 
+    /**
+     * @param mixed $firstname
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param mixed $lastname
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    /**
+     * @param mixed $birthday
+     */
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClassroom()
+    {
+        return $this->classroom;
+    }
+
+    /**
+     * @param mixed $classroom
+     */
+    public function setClassroom($classroom)
+    {
+        $this->classroom = $classroom;
     }
 }

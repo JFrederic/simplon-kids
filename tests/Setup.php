@@ -1,17 +1,18 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: jouan
- * Date: 18/04/17
- * Time: 18:24
+ * User: Frederic Jouan
+ * Date: 13/05/2017
+ * Time: 22:14
  */
 
-namespace simplonkids\classes;
+namespace tests;
+
+
+use PHPUnit\Framework\TestCase;
 use PDO;
-use PDOException;
 
-
-class Sql
+class Setup extends TestCase
 {
     public $hostname = 'localhost';
     public $db_username = 'root';
@@ -43,12 +44,5 @@ class Sql
 
         return $stmt;
     }
-
-    public function lastId()
-    {
-        return $this->connection->lastInsertId();
-    }
-
-
 
 }

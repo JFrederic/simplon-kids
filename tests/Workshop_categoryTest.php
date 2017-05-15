@@ -1,4 +1,6 @@
 <?php
+namespace tests;
+use simplonkids\model\WorkshopCategory;
 
 /**
  * Created by PhpStorm.
@@ -6,26 +8,21 @@
  * Date: 11/05/2017
  * Time: 14:26
  */
-class Workshop_categoryTest extends \PHPUnit\Framework\TestCase
+class Workshop_categoryTest extends Setup
 {
-    private $connection;
+    public $workshop_category;
 
-    public function getConnection()
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
-        try {
-            $this->connection = new PDO('mysql:host=localhost;dbname=simplonkids', 'root', '');
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
-            die();
-        }
-        return $this->connection;
+        $this->workshop_category = new WorkshopCategory($this->getConnection());
+        parent::__construct($name, $data, $dataName);
     }
+
 
     public function testFindAll()
     {
-        $workshop_category = new \simplonkids\model\WorkshopCategory();
-        $actual = $workshop_category->findAll(PDO::FETCH_ASSOC);
+
+        $actual = $this->workshop_category->findAll();
         $expected = array(
             array('id' => '1','name' => 'Debutant'),
             array('id' => '2','name' => 'Intermediaire'),

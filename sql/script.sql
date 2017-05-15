@@ -33,6 +33,8 @@
     CONSTRAINT `fk_parent_address`
       FOREIGN KEY (address_id)
       REFERENCES `address`(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
     )
   ENGINE = InnoDB;
 
@@ -41,10 +43,14 @@
     parent_id INT NOT NULL,
     CONSTRAINT `fk_kid_parent`
       FOREIGN KEY (kid_id)
-      REFERENCES `kid`(id),
+      REFERENCES `kid`(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
     CONSTRAINT `fk_parent_kid`
       FOREIGN KEY (parent_id)
       REFERENCES `parent`(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
   )
   ENGINE = InnoDB;
 
@@ -72,6 +78,8 @@
     CONSTRAINT `fk_establishment_address`
        FOREIGN KEY (address_id)
       REFERENCES address(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
   )
   ENGINE = InnoDB;
 
@@ -90,13 +98,19 @@
     PRIMARY KEY (id),
     CONSTRAINT `fk_workshop_public_age`
       FOREIGN KEY (public_age_id)
-      REFERENCES public_age(id),
+      REFERENCES public_age(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
     CONSTRAINT `fk_workshop_establishment`
       FOREIGN KEY (establishment_id)
-      REFERENCES establishment(id),
+      REFERENCES establishment(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
     CONSTRAINT `fk_workshop_workshop_category_id`
       FOREIGN KEY (workshop_category_id)
       REFERENCES workshop_category(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
   )
   ENGINE = InnoDB;
 
@@ -107,10 +121,14 @@
     validated TINYINT,
     CONSTRAINT `fk_workshop_kid`
       FOREIGN KEY (workshop_id)
-      REFERENCES `workshop`(id),
+      REFERENCES `workshop`(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
     CONSTRAINT `fk_kid_workshop`
       FOREIGN KEY (kid_id)
       REFERENCES `kid`(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
   )
   ENGINE = InnoDB;
 
@@ -124,6 +142,8 @@
     CONSTRAINT `fk_timetable_workshop`
       FOREIGN KEY (workshop_id)
       REFERENCES `workshop`(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
   )
   ENGINE = InnoDB;
 

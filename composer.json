@@ -15,5 +15,8 @@
         "config": {
             "optimize-autoloader": true
         }
+    },
+    "scripts":{
+        "start" : "php -S localhost:8080 -t web"
     }
 }

@@ -14,6 +14,26 @@ use simplonkids\classes\Model;
 class Address extends Model
 {
     public $id;
+    public $address;
+    public $complement;
+    public $city;
+    public $zipcode;
+
+
+
+    public function addAddress() {
+        $sql = 'INSERT INTO address(address, complement, city, zipcode) VALUES(:address,:complement,:city,:zipcode)';
+        $arguments = [
+            ':address' => $this->getAddress(),
+            ':complement' => $this->getComplement(),
+            ':city' => $this->getCity(),
+            ':zipcode' => $this->getZipcode(),
+        ];
+
+        $stmt = $this->prepareExecute($sql,$arguments);
+
+        $this->setId($this->lastId());
+    }
 
     /**
      * @return mixed
@@ -31,17 +51,68 @@ class Address extends Model
         $this->id = $id;
     }
 
-    public function addAddress($address) {
-        $sql = 'INSERT INTO address(address, complement, city, zipcode) VALUES(:address,:complement,:city,:zipcode)';
-        $arguments = [
-            ':address' => $address['address'],
-            ':complement' => $address['complement'],
-            ':city' => $address['city'],
-            ':zipcode' => $address['zipcode'],
-        ];
-
-        $stmt = $this->prepareExecute($sql,$arguments);
-
-        $this->setId($this->lastId());
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComplement()
+    {
+        return $this->complement;
+    }
+
+    /**
+     * @param mixed $complement
+     */
+    public function setComplement($complement)
+    {
+        $this->complement = $complement;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZipcode()
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * @param mixed $zipcode
+     */
+    public function setZipcode($zipcode)
+    {
+        $this->zipcode = $zipcode;
+    }
+
 }

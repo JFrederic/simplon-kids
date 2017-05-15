@@ -13,19 +13,23 @@ use simplonkids\classes\Model;
 
 class WorkshopHasKids extends Model
 {
-    private $workshop_id;
-    private $kid_id;
+    protected $workshop_id;
+    protected $kid_id;
+    protected $has_participated;
+    protected $validated;
 
 
     public function setKidsOnWorkshop() {
         $sql = 'INSERT INTO workshop_has_kid(workshop_id, kid_id, has_participated, validated) VALUES 
                 (:workshop_id,:kid_id,:has_participated,:validated)
               ';
+
+
         $arguments = [
             ':workshop_id' => $this->getWorkshopId(),
             ':kid_id' => $this->getKidId(),
-            ':has_participated' => 1,
-            ':validated' => 0,
+            ':has_participated' => $this->getHasParticipated(),
+            ':validated' => $this->getValidated(),
         ];
 
         $stmt = $this->prepareExecute($sql,$arguments);
@@ -53,4 +57,35 @@ class WorkshopHasKids extends Model
         return $this->kid_id;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getValidated()
+    {
+        return $this->validated;
+    }
+
+    /**
+     * @param mixed $validated
+     */
+    public function setValidated($validated)
+    {
+        $this->validated = $validated;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHasParticipated()
+    {
+        return $this->has_participated;
+    }
+
+    /**
+     * @param mixed $has_participated
+     */
+    public function setHasParticipated($has_participated)
+    {
+        $this->has_participated = $has_participated;
+    }
 }

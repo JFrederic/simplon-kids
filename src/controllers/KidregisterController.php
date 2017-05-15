@@ -56,43 +56,35 @@ class KidregisterController
             $birthday2 = $request->get('birthday2');
             $classroom2 = $request->get('classroom2');
 
-            // Address param form data
-            $address_param = [
-                'address' => $address,
-                'complement' => $complement,
-                'city' => $city,
-                'zipcode' => $zipcode
-            ];
-            $addresse->addAddress($address_param);
+            // Settings address form data
+            $addresse->setAddress($address);
+            $addresse->setComplement($complement);
+            $addresse->setCity($city);
+            $addresse->setZipcode($zipcode);
+
+            $addresse->addAddress();
             $address_id = $addresse->getId();
 
-                // Parent param form data
-            $parent_param = [
-                'parent_lastname' => $parent_lastname,
-                'parent_firstname' => $parent_firstname,
-                'email' => $email,
-                'workshop_id' => $workshop_id,
-                'address' => $address,
-                'complement' => $complement,
-                'city' => $city,
-                'zipcode' => $zipcode,
-                'telephone' => $phone,
-                'address_id' => $address_id,
-            ];
-            $parent->addParent($parent_param);
+            // Settings parent form data
+            $parent->setLastname($parent_lastname);
+            $parent->setFirstname($parent_firstname);
+            $parent->setEmail($email);
+            $parent->setTelephone($phone);
+            $parent->setAddressId($address_id);
+            $parent->addParent();
             $parent_id = $parent->getId();
             $kid_has_parent->setParentId($parent_id);
 
+            // To insert a kid
             if (!empty(isset($_POST['kid_firstname']))) {
-                $kid_param = [
-                    'kid_lastname' => $kid_lastname,
-                    'kid_firstname' => $kid_firstname,
-                    'birthday' => $birthday,
-                    'classroom' => $classroom,
-                ];
+
+                $kid->setFirstname($kid_firstname);
+                $kid->setLastname($kid_lastname);
+                $kid->setBirthday($birthday);
+                $kid->setClassroom($classroom);
 
                 // To link a kid to a workshop
-                $kid->addKid($kid_param);
+                $kid->addKid();
                 $kidId = $kid->getId();
                 $workshop_haskids->setKidId($kidId);
                 $workshop_haskids->setKidsOnWorkshop();
@@ -101,16 +93,14 @@ class KidregisterController
                 $kid_has_parent->setKidId($kidId);
                 $kid_has_parent->setKidHasParent();
 
-
-                $kid_param2 = [
-                    'kid_lastname' => $kid_lastname2,
-                    'kid_firstname' => $kid_firstname2,
-                    'birthday' => $birthday2,
-                    'classroom' => $classroom2,
-                ];
+                // Settings the second child data
+                $kid->setLastname($kid_lastname2);
+                $kid->setFirstname($kid_firstname2);
+                $kid->setBirthday($birthday2);
+                $kid->setClassroom($classroom2);
 
                 // To link a kid to a workshop
-                $kid->addKid($kid_param2);
+                $kid->addKid();
                 $kidId = $kid->getId();
                 $workshop_haskids->setKidId($kidId);
                 $workshop_haskids->setKidsOnWorkshop();

@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `simplonkids_test` CHARACTER SET 'utf8';
-USE `simplonkids_test` ;
+CREATE DATABASE IF NOT EXISTS `simplonkidstest` CHARACTER SET 'utf8';
+USE `simplonkidstest` ;
 
 CREATE TABLE IF NOT EXISTS `kid` (
   id INT NOT NULL AUTO_INCREMENT,
@@ -33,6 +33,8 @@ CREATE TABLE IF NOT EXISTS `parent` (
   CONSTRAINT `fk_parent_address`
   FOREIGN KEY (address_id)
   REFERENCES `address`(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 )
   ENGINE = InnoDB;
 
@@ -41,10 +43,14 @@ CREATE TABLE IF NOT EXISTS `kid_has_parent` (
   parent_id INT NOT NULL,
   CONSTRAINT `fk_kid_parent`
   FOREIGN KEY (kid_id)
-  REFERENCES `kid`(id),
+  REFERENCES `kid`(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_parent_kid`
   FOREIGN KEY (parent_id)
   REFERENCES `parent`(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 )
   ENGINE = InnoDB;
 
@@ -72,6 +78,8 @@ CREATE TABLE IF NOT EXISTS `establishment` (
   CONSTRAINT `fk_establishment_address`
   FOREIGN KEY (address_id)
   REFERENCES address(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 )
   ENGINE = InnoDB;
 
@@ -80,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `workshop` (
   id INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
-  price DECIMAL NOT NULL,
+  price DECIMAL(5,2) NOT NULL,
   max_kids INT NOT NULL,
   image VARCHAR(255),
   visible TINYINT,
@@ -90,13 +98,19 @@ CREATE TABLE IF NOT EXISTS `workshop` (
   PRIMARY KEY (id),
   CONSTRAINT `fk_workshop_public_age`
   FOREIGN KEY (public_age_id)
-  REFERENCES public_age(id),
+  REFERENCES public_age(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_workshop_establishment`
   FOREIGN KEY (establishment_id)
-  REFERENCES establishment(id),
+  REFERENCES establishment(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_workshop_workshop_category_id`
   FOREIGN KEY (workshop_category_id)
   REFERENCES workshop_category(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 )
   ENGINE = InnoDB;
 
@@ -107,10 +121,14 @@ CREATE TABLE IF NOT EXISTS `workshop_has_kid` (
   validated TINYINT,
   CONSTRAINT `fk_workshop_kid`
   FOREIGN KEY (workshop_id)
-  REFERENCES `workshop`(id),
+  REFERENCES `workshop`(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_kid_workshop`
   FOREIGN KEY (kid_id)
   REFERENCES `kid`(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 )
   ENGINE = InnoDB;
 
@@ -124,6 +142,8 @@ CREATE TABLE IF NOT EXISTS `timetable` (
   CONSTRAINT `fk_timetable_workshop`
   FOREIGN KEY (workshop_id)
   REFERENCES `workshop`(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 )
   ENGINE = InnoDB;
 
@@ -164,30 +184,30 @@ INSERT INTO `kid_has_parent`(kid_id,parent_id) VALUES
 -- public age table data
 
 INSERT INTO `public_age`(start,`end`) VALUES
-  (6,10),
-  (10,13),
-  (6,14);
+  (4,8),
+  (8,12),
+  (12,16);
 
 
 -- establishment table data
 
 INSERT INTO `establishment`(`name`,address_id) VALUES
-  ("Paul Éluard",5);
+  ("Simplon Reunion",5);
 
 -- workshop category table data
 
 INSERT INTO `workshop_category`(name) VALUES
-  ("Bronze"),
-  ("Silver"),
-  ("Gold"),
-  ("Challenger");
+  ("Debutant"),
+  ("Intermediaire"),
+  ("Difficile"),
+  ("Insane");
 
 -- workshop table data
 
 INSERT INTO `workshop`(title,description,price,max_kids,image,visible,public_age_id,establishment_id,workshop_category_id) VALUES
-  ("Code combat","Jeux de rôles ou l'on doit faire évoluer l'adversaire dans un donjon grâce à des ligne de code",9.99,30,"",0,2,1,3),
-  ("Scratch","Minecraft",20,15,"",0,1,1,1),
-  ("Algo","Ecrire un algoritme qui résout un énoncé donné(lvl surdoué)",20,10,"",0,1,1,4);
+  ("Code combat","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",9.99,30,"Workshop1.jpg",0,2,1,3),
+  ("Scratch","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",20,15,"Workshop1.jpg",0,1,1,1),
+  ("Algo","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",20,10,"Workshop1.jpg",0,1,1,4);
 
 -- timetable table data
 

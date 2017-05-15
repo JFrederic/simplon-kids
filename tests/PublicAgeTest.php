@@ -1,4 +1,6 @@
 <?php
+namespace tests;
+use simplonkids\model\PublicAge;
 
 /**
  * Created by PhpStorm.
@@ -6,26 +8,21 @@
  * Date: 11/05/2017
  * Time: 14:26
  */
-class PublicAgeTest extends \PHPUnit\Framework\TestCase
+class PublicAgeTest extends Setup
 {
-    private $connection;
+    public $public_age;
 
-    public function getConnection()
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
-        try {
-            $this->connection = new PDO('mysql:host=localhost;dbname=simplonkids', 'root', '');
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
-            die();
-        }
-        return $this->connection;
+        $this->public_age = new PublicAge($this->getConnection());
+        parent::__construct($name, $data, $dataName);
     }
+
 
     public function testFindAll()
     {
-        $public_age = new \simplonkids\model\PublicAge();
-        $actual = $public_age->findAll(PDO::FETCH_ASSOC);
+
+        $actual = $this->public_age->findAll();
         $expected = array(
             array('id' => '1','start' => '4','end' => '8'),
             array('id' => '2','start' => '8','end' => '12'),

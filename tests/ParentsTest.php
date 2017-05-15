@@ -1,4 +1,6 @@
 <?php
+namespace tests;
+use simplonkids\model\Parents;
 
 /**
  * Created by PhpStorm.
@@ -6,58 +8,34 @@
  * Date: 11/05/2017
  * Time: 13:52
  */
-class ParentsTest extends \PHPUnit\Framework\TestCase
+class ParentsTest extends Setup
 {
-    private $connection;
+    public $parent;
 
-    public function getConnection()
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
-        try {
-            $this->connection = new PDO('mysql:host=localhost;dbname=simplonkids', 'root', '');
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
-            die();
-        }
-
-        return $this->connection;
+        $this->parent = new Parents($this->getConnection());
+        parent::__construct($name, $data, $dataName);
     }
 
     public function testInsertParent(){
 
-        $database = $this->getConnection();
-        $parent_arguments = [
-            'parent_firstname' => "fred",
-            'parent_lastname' => "jouan",
-            'email' => "fredjouan@gmail.fr",
-            'telephone' => "0692325840",
-            'address_id' => 3,
-        ];
-        $parent = new \simplonkids\model\Parents();
-        $parent->addParent($parent_arguments);
-        $lastId = $parent->lastId();
+        $sql = 'SELECT * FROM parent';
+        $expected =  count($this->prepareExecute($sql,[])->fetchAll(\PDO::FETCH_ASSOC)) + 1;
 
-        $expected = [
-            'id' => $lastId,
-            'firstname' => "jouan",
-            'lastname' => "jouan",
-            'email' => "fredjouan@gmail.fr",
-            'telephone' => "0692325840",
-            'address_id' => 3,
-        ];
+        $this->parent->setFirstname("fred");
+        $this->parent->setLastname("jouan");
+        $this->parent->setEmail("fredjouan@gmail.fr");
+        $this->parent->setTelephone("0692325840");
+        $this->parent->setAddressId(1);
+        $this->parent->addParent();
 
-        $sql = 'SELECT * FROM parent WHERE :id = id';
-        $arguments = [
-            ':id' => $lastId
-        ];
-        $query = $database->prepare($sql);
-        $query->execute($arguments);
-        $results = $query->fetch(PDO::FETCH_ASSOC);
-        $this->assertEquals($expected,$results);
+        $actual = count($this->prepareExecute($sql,[])->fetchAll(\PDO::FETCH_ASSOC));
+
+        $this->assertEquals($expected,$actual);
 
         $sql = 'DELETE FROM parent WHERE :id = id';
-        $delete = $database->prepare($sql);
-        $delete->execute($arguments);
+        $this->prepareExecute($sql,[":id" => $this->parent->getId()]);
     }
 
 }

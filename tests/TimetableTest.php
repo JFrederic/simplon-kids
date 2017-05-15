@@ -1,4 +1,6 @@
 <?php
+namespace tests;
+use simplonkids\model\Timetable;
 
 /**
  * Created by PhpStorm.
@@ -6,57 +8,34 @@
  * Date: 11/05/2017
  * Time: 13:52
  */
-class TimetableTest extends \PHPUnit\Framework\TestCase
+class TimetableTest extends Setup
 {
-    private $connection;
 
-    public function getConnection()
+    public $timetable;
+
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
-        try {
-            $this->connection = new PDO('mysql:host=localhost;dbname=simplonkids', 'root', '');
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
-            die();
-        }
-
-        return $this->connection;
+        $this->timetable = new Timetable($this->getConnection());
+        parent::__construct($name, $data, $dataName);
     }
 
     public function testInsertTimeTable(){
 
-        $database = $this->getConnection();
+        $expected = count($this->timetable->fetchAll())+1;
 
-        $timetable_arguments = [
-            'startAt' => "2017-05-15 00:00:00",
-            'endAt' => "2017-05-25 00:00:00",
-            'enable' => 0,
-            'workshop_id' => 1,
-        ];
-        $timetable = new \simplonkids\model\Timetable();
-        $timetable->addTimetable($timetable_arguments);
-        $lastId = $timetable->lastId();
+        $this->timetable->setStartAt("2017-05-15 00:00:00");
+        $this->timetable->setEndAt("2017-05-25 00:00:00");
+        $this->timetable->setEnable(0);
+        $this->timetable->setWorkshopId(1);
+        $this->timetable->addTimetable();
 
-        $expected = [
-            'id'=> $lastId,
-            'startAt' => "2017-05-15 00:00:00",
-            'endAt' => "2017-05-25 00:00:00",
-            'enable' => 0,
-            'workshop_id' => 1,
-        ];
 
-        $sql = 'SELECT * FROM timetable WHERE :id = id';
-        $arguments = [
-            ':id' => $lastId
-        ];
-        $query = $database->prepare($sql);
-        $query->execute($arguments);
-        $results = $query->fetch(PDO::FETCH_ASSOC);
-        $this->assertEquals($expected,$results);
+        $actual = count($this->timetable->fetchAll());
+        $this->assertEquals($expected,$actual);
 
         $sql = 'DELETE FROM timetable WHERE :id = id';
-        $delete = $database->prepare($sql);
-        $delete->execute($arguments);
+        $this->prepareExecute($sql,[':id'=> $this->timetable->getId()]);
+
     }
 
 }

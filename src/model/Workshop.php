@@ -15,22 +15,15 @@ use PDO;
 class Workshop extends Model
 {
     public $id;
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
+    public $title;
+    public $description;
+    public $price;
+    public $max_kids;
+    public $image;
+    public $visible;
+    public $public_age_id;
+    public $establishment_id;
+    public $workshop_category_id;
 
 
     public function findAll()
@@ -54,23 +47,29 @@ class Workshop extends Model
         return $results;
     }
 
+    public function fetchAll(){
+        $sql = 'SELECT * FROM workshop';
+        $results = $this->prepareExecute($sql,[])->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    }
 
-    public function addWorkshop($workshop)
+
+    public function addWorkshop()
     {
 
         $sql = 'INSERT INTO workshop(title,description,price,max_kids,image,visible,public_age_id,establishment_id,workshop_category_id)
                 VALUES (:title,:description,:price,:max_kids,:image,:visible,:public_age_id,:establishment_id,:workshop_category_id)';
 
         $arguments = [
-            ':title' => $workshop['title'],
-            ':description' => $workshop['description'],
-            ':price' => $workshop['price'],
-            ':max_kids' => $workshop['max_kids'],
-            ':image' => $workshop['image'],
-            ':visible' => $workshop['visible'],
-            ':public_age_id' => $workshop['public_age_id'],
-            ':establishment_id' => $workshop['establishment_id'],
-            ':workshop_category_id' => $workshop['workshop_category_id'],
+            ':title' => $this->getTitle(),
+            ':description' => $this->getDescription(),
+            ':price' => $this->getPrice(),
+            ':max_kids' => $this->getMaxKids(),
+            ':image' => $this->getImage(),
+            ':visible' => $this->getVisible(),
+            ':public_age_id' => $this->getPublicAgeId(),
+            ':establishment_id' => $this->getEstablishmentId(),
+            ':workshop_category_id' => $this->getWorkshopCategoryId(),
 
         ];
         $stmt = $this->prepareExecute($sql, $arguments);
@@ -130,8 +129,7 @@ class Workshop extends Model
 
     public function delete($id)
     {
-        $sql = "DELETE FROM workshop
-    WHERE id = :id";
+        $sql = "DELETE FROM workshop WHERE id = :id";
 
         $arguments = [
             ':id' => $id
@@ -156,6 +154,168 @@ class Workshop extends Model
 //        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //        return $results;
 //    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param mixed $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMaxKids()
+    {
+        return $this->max_kids;
+    }
+
+    /**
+     * @param mixed $max_kids
+     */
+    public function setMaxKids($max_kids)
+    {
+        $this->max_kids = $max_kids;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    /**
+     * @param mixed $visible
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPublicAgeId()
+    {
+        return $this->public_age_id;
+    }
+
+    /**
+     * @param mixed $public_age_id
+     */
+    public function setPublicAgeId($public_age_id)
+    {
+        $this->public_age_id = $public_age_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEstablishmentId()
+    {
+        return $this->establishment_id;
+    }
+
+    /**
+     * @param mixed $establishment_id
+     */
+    public function setEstablishmentId($establishment_id)
+    {
+        $this->establishment_id = $establishment_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWorkshopCategoryId()
+    {
+        return $this->workshop_category_id;
+    }
+
+    /**
+     * @param mixed $workshop_category_id
+     */
+    public function setWorkshopCategoryId($workshop_category_id)
+    {
+        $this->workshop_category_id = $workshop_category_id;
+    }
 
 
 }
