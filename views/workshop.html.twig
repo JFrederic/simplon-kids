@@ -47,12 +47,12 @@
                             <p>{{ workshop.establishment }} {{ workshop.city }}</p>
                             <p>{{ workshop.startAt }}</p>
                             <p>{{ workshop.start }}-{{ workshop.end }} ans <span class="pull-right">{{ workshop.price }} €</span></p>
-                            <p class="text-center" style="margin-top: 25px"><a href="#" class="btn btn-primary" role="button">Inscrire</a> <a href="/edit/{{ workshop.id }}" class="pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a></p>
-                            <ul class="list-inline">
-                                <li ></li>
-                                <li></li>
-                            </ul>
-
+                            <p class="text-center" style="margin-top: 25px">
+                                <a href="#" class="btn btn-primary" role="button">Inscrire</a>
+                                {% if app.session.get('user') %}
+                                    <a href="/edit/{{ workshop.id }}" class="pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a><br>
+                                    <a href="/delete/{{ workshop.id }}" class="pull-right" role="button"><span class="glyphicon glyphicon-trash"></span></a></p>
+                          {% endif %}
                         </div>
                     </div>
                 </div>

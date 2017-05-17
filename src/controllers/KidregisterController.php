@@ -87,6 +87,8 @@ class KidregisterController
                 $kid->addKid();
                 $kidId = $kid->getId();
                 $workshop_haskids->setKidId($kidId);
+                $workshop_haskids->setHasParticipated(0);
+                $workshop_haskids->setValidated(0);
                 $workshop_haskids->setKidsOnWorkshop();
 
                 // To link a kid to a parent
@@ -94,23 +96,28 @@ class KidregisterController
                 $kid_has_parent->setKidHasParent();
 
                 // Settings the second child data
-                $kid->setLastname($kid_lastname2);
-                $kid->setFirstname($kid_firstname2);
-                $kid->setBirthday($birthday2);
-                $kid->setClassroom($classroom2);
+                if (!empty($_POST['kid_lastname2'])){
+                    $kid->setLastname($kid_lastname2);
+                    $kid->setFirstname($kid_firstname2);
+                    $kid->setBirthday($birthday2);
+                    $kid->setClassroom($classroom2);
 
-                // To link a kid to a workshop
-                $kid->addKid();
-                $kidId = $kid->getId();
-                $workshop_haskids->setKidId($kidId);
-                $workshop_haskids->setKidsOnWorkshop();
+                    // To link a kid to a workshop
+                    $kid->addKid();
+                    $kidId = $kid->getId();
+                    $workshop_haskids->setKidId($kidId);
+                    $workshop_haskids->setKidsOnWorkshop();
 
-                // To link a kid to a parent
-                $kid_has_parent->setKidId($kidId);
-                $kid_has_parent->setKidHasParent();
-
-                $app->redirect('/');
+                    // To link a kid to a parent
+                    $kid_has_parent->setKidId($kidId);
+                    $kid_has_parent->setKidHasParent();
+                }
+                else{
+                    $_POST['birthday2'] = '';
+                }
+                return $app->redirect('/');
             }
+
 
         }
         $workshop = new Workshop();

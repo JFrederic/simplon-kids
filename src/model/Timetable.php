@@ -41,7 +41,7 @@ class Timetable extends Model {
         return $this->prepareExecute($sql,[])->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function setTimetable($timetable){
+    public function editTimetable(){
         $sql = 'UPDATE timetable SET
                 startAt = :startAt,
                 endAt = :endAt,
@@ -49,16 +49,17 @@ class Timetable extends Model {
                 workshop_id = :workshop_id
                 WHERE :workshop_id = workshop_id
                 ';
-        $startAt =  strtr($timetable['startAt'], '/', '-');
-        $endAt =  strtr($timetable['endAt'], '/', '-');
+        $startAt =  strtr($this->getStartAt(), '/', '-');
+        $endAt =  strtr($this->getEndAt(), '/', '-');
         $arguments = [
             ':startAt' => date('Y-m-d H:i:s',strtotime($startAt)),
             ':endAt' => date('Y-m-d H:i:s',strtotime($endAt)),
             ':enable' => 0,
-            ':workshop_id' => $timetable['workshop_id']
+            ':workshop_id' => $this->getWorkshopId(),
         ];
 
         $stmt = $this->prepareExecute($sql,$arguments);
+        $this->setId($this->getId());
     }
 
     /**

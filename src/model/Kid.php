@@ -34,6 +34,11 @@ class Kid extends Model
 
     }
 
+    public function findAll() {
+        $sql = 'SELECT * FROM kid';
+        return $this->prepareExecute($sql,[])->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     /**
      * @return mixed
      */

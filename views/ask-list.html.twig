@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="container" style="margin-top: 120px;">
+        <section class="content">
+            <legend>Demandes d'inscription</legend>
+            <div class="col-xs-12 col-sm-10 col-lg-8 col-lg-offset-2">
+                <table class="table table-filter">
+                    <tbody>
+                    {% for subscription in subscriptions_request %}
+                        {% for workshop in workshops %}
+                            {% for kid in kids %}
+                                {% if workshop.id == subscription.workshop_id %}
+                                    {% if kid.id == subscription.kid_id %}
+                                        <tr data-status="pagado">
+                                            <td>
+                                                <div class="media">
+                                                    <a href="#" class="pull-left">
+                                                        <img src="/images/{{ workshop.image }}"
+                                                           width="130px" height="120px"   class="media-photo">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <span class="media-meta pull-right">{{ workshop.startAt }}</span>
+                                                        <h4 class="title">
+                                                            {{ workshop.title }}
+                                                        </h4>
+                                                        <p class="summary">Demande d'inscription
+                                                            pour {{ kid.firstname }} {{ kid.lastname }}</p>
+                                                        <a href="/validate/{{ workshop.id }}/{{ kid.id }}"
+                                                           class="btn btn-success btn-md glyphicon glyphicon-check pull-right"></a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+
+                                {% endif %}
+                            {% endfor %}
+
+                        {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+
+{% endblock %}
+

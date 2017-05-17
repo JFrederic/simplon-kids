@@ -42,4 +42,41 @@ class WorkshopHasKidsTest extends Setup
         $stmt = $this->prepareExecute($sql,[]);
     }
 
+    public function testFindByNotValidated(){
+
+        $actual = $this->workshop_has_kid->findByNotValidated();
+        $expected = array(
+            array('workshop_id' => '1','kid_id' => '2','has_participated' => '0','validated' => '0'),
+            array('workshop_id' => '2','kid_id' => '4','has_participated' => '0','validated' => '0'),
+            array('workshop_id' => '3','kid_id' => '1','has_participated' => '0','validated' => '0')
+        );
+        $this->assertEquals($expected,$actual);
+
+    }
+
+    public function testValidation() {
+
+        $sql = 'SELECT * FROM workshop_has_kid WHERE validated = :validated AND kid_id = :kid_id AND workshop_id = :workshop_id';
+        $arguments = [
+            ':validated' => 0,
+            ':kid_id' => 1,
+            ':workshop_id' => 1,
+        ];
+        $actual = $this->prepareExecute($sql,$arguments)->fetch(\PDO::FETCH_ASSOC);
+        $this->workshop_has_kid->setValidated(1);
+        $this->workshop_has_kid->setKidId(1);
+        $this->workshop_has_kid->setWorkshopId(1);
+        $this->workshop_has_kid->validation();
+
+        $expected = $this->prepareExecute($sql,[':validated'=>1,':kid_id'=>1,':workshop_id'=>1])->fetch(\PDO::FETCH_ASSOC);
+
+        $this->assertEquals($expected,$actual);
+
+        $this->workshop_has_kid->setValidated(0);
+        $this->workshop_has_kid->setKidId(1);
+        $this->workshop_has_kid->setWorkshopId(1);
+        $this->workshop_has_kid->validation();
+
+    }
+
 }

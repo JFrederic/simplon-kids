@@ -43,6 +43,13 @@
                     <li><a href="/register">Inscrire</a></li>
                     <li><a href="/faq">FAQ</a></li>
                     <li><a href="/contact">Contact</a></li>
+                    {% if app.session.get('user') == false %}
+                        <li><a href="/login">Se connecter</a></li>
+                    {% endif %}
+                    {% if app.session.get('user') %}
+                        <li><a href="/ask/list">Gestion</a></li>
+                        <li><a href="/logout">Déconnecter</a></li>
+                    {% endif %}
                 </ul>
             </div><!-- /.nav-collapse -->
         </div><!-- /.container -->

@@ -97,7 +97,7 @@ class Workshop extends Model
         return $results;
     }
 
-    public function setWorkshop($workshop, $id)
+    public function editWorkshop()
     {
 
         $sql = 'UPDATE workshop SET 
@@ -113,18 +113,19 @@ class Workshop extends Model
                 WHERE id = :id
                 ';
         $arguments = [
-            ':title' => $workshop['title'],
-            ':description' => $workshop['description'],
-            ':price' => $workshop['price'],
-            ':max_kids' => $workshop['max_kids'],
-            ':image' => $workshop['image'],
-            ':visible' => $workshop['visible'],
-            ':public_age_id' => $workshop['public_age_id'],
-            ':establishment_id' => $workshop['establishment_id'],
-            ':workshop_category_id' => $workshop['workshop_category_id'],
-            ':id' => $id
+            ':title' => $this->getTitle(),
+            ':description' => $this->getDescription(),
+            ':price' => $this->getPrice(),
+            ':max_kids' => $this->getMaxKids(),
+            ':image' => $this->getImage(),
+            ':visible' => $this->getVisible(),
+            ':public_age_id' => $this->getPublicAgeId(),
+            ':establishment_id' => $this->getEstablishmentId(),
+            ':workshop_category_id' => $this->getWorkshopCategoryId(),
+            ':id' => $this->getId(),
         ];
         $stmt = $this->prepareExecute($sql, $arguments);
+        $this->setId($this->getId());
     }
 
     public function delete($id)

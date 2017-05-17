@@ -1,98 +1,110 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <form method="post" action="/edit/{{ edit_workshop.id }}">
-                <div class="form-group">
-                    <label for="title">titre</label>
-                    <input type="text" name="title" value="{{ edit_workshop.title }}"  class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="description">description</label>
-                    <textarea name="description"  cols="30" rows="10">{{ edit_workshop.description }}</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="price">prix</label>
-                    <input type="number" step="0.01" value="{{ edit_workshop.price }}" name="price" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="max_kids">Nombres d'enfants maximum</label>
-                    <input type="number" name="max_kids"  value="{{ edit_workshop.max_kids }}" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label class="btn btn-default btn-file">
-                        Choisir une image <input type="file" value="{{ edit_workshop.image }}" name="image" hidden>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="visible">Visible</label>
-                    <input type="checkbox" name="visible" value="{{ edit_workshop.visible }}" checked="checked" class="form-control">
-                </div>
-                <div class="form-group">
-                    <select name="public_age_id" class="form-control mini-select" >
-                        <option value="" selected>Tranche d'âge</option>
-                        {% for age in ages %}
-                            {% if age.id ==  edit_workshop.public_age_id  %}
-                                <option value="{{ edit_workshop.public_age_id }}" selected>{{ edit_workshop.start }}-{{ edit_workshop.end }}</option>
-                            {% else %}
-                                <option value="{{ age.id }}" >{{ age.start }}-{{ age.end }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select name="establishment_id" class="form-control mini-select">
-                        <option value="" selected>Établissement</option>
-                        {% for establishment in establishments %}
-                            {% if establishment.id == edit_workshop.establishment_id %}
-                                <option value="{{ edit_workshop.establishment_id }}" selected>{{ edit_workshop.establishment }}</option>
-                             {% else %}
-                                 <option value="{{ establishment.id }}">{{ establishment.name }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select name="workshop_category_id" class="form-control mini-select">
-                        <option value="" selected>Catégorie</option>
-                        {% for category in categories %}
-                            {% if category.id == edit_workshop.workshop_category_id %}
-                                <option value="{{ edit_workshop.workshop_category_id }}" selected>{{ edit_workshop.name }}</option>
-                            {% else %}
-                                <option value="{{ category.id }}">{{ category.name }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="row">
-                    <div class='col-md-5'>
-                        <div class="form-group">
-                            <label for="startAt">Date de début</label>
-                            <div class='input-group date' id='datetimepicker1'>
-                                <input type='datetime' name="startAt" value="{{ edit_workshop.startAt }}" class="form-control"/>
-                                <span class="input-group-addon">
+    <div class="container" style="margin-top: 120px;">
+        <div class="col-xs-12 col-sm-10 col-lg-8 col-lg-offset-2">
+            <fieldset>
+                <legend>Modifier un Atelier</legend>
+                <form method="post" action="/edit/{{ edit_workshop.id }}">
+                    <div class="form-group">
+                        <label for="input-text" class="control-label">Titre</label>
+                        <input required value="{{ edit_workshop.title }}" type="text" class="form-control" name="title" id="input-text" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="input-date" class="control-label">Description</label>
+                        <textarea name="description"  class="form-control" id="" cols="30" rows="10">{{ edit_workshop.description }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="control-label">Price</label>
+                        <input required type="number" value="{{ edit_workshop.price }}" step="0.01" class="form-control mask-money" name="price" id="input-money" placeholder="0,00">
+                    </div>
+                    <div class="form-group">
+                        <label for="max_kids" class="control-label">Nombres d'enfants maximum</label>
+                        <input required type="number" value="{{ edit_workshop.max_kids }}" class="form-control" name="max_kids" >
+                    </div>
+                    <div class="form-group">
+                        <label class="btn btn-default btn-file">
+                            Choisir une image <input  type="file" value="{{ edit_workshop.image }}" class="form-control" name="image" hidden>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="job" class="control-label">Visible</label>
+                        <div class="checkbox">
+                            <label>
+                                <input  type="checkbox" value="{{ edit_workshop.visible }}" name="visible" checked="checked"/>
+                                <span>Visible</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-select" class="control-label">Tranche d'âge</label>
+                        <select required class="form-control" name="public_age_id" id="input-select">
+                            <option value="" selected disabled>Tranche d'âge</option>
+                            {% for age in ages %}
+                                {% if age.id ==  edit_workshop.public_age_id  %}
+                                    <option value="{{ edit_workshop.public_age_id }}" selected>{{ edit_workshop.start }}-{{ edit_workshop.end }}</option>
+                                {% else %}
+                                    <option value="{{ age.id }}" >{{ age.start }}-{{ age.end }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-select" class="control-label">Etablissement</label>
+                        <select required class="form-control" name="establishment_id" id="input-select">
+                            <option value="" selected disabled>Établissement</option>
+                            {% for establishment in establishments %}
+                                {% if establishment.id == edit_workshop.establishment_id %}
+                                    <option value="{{ edit_workshop.establishment_id }}" selected>{{ edit_workshop.establishment }}</option>
+                                {% else %}
+                                    <option value="{{ establishment.id }}">{{ establishment.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-select" class="control-label">Categorie</label>
+                        <select required class="form-control" name="workshop_category_id" id="input-select">
+                            <option value="" selected disabled>Catégorie</option>
+                            {% for category in categories %}
+                                {% if category.id == edit_workshop.workshop_category_id %}
+                                    <option value="{{ edit_workshop.workshop_category_id }}" selected>{{ edit_workshop.name }}</option>
+                                {% else %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class='col-md-5'>
+                            <div class="form-group">
+                                <label for="startAt">Date de début</label>
+                                <div class='input-group date' id='datetimepicker1'>
+                                    <input required type='text' value="{{ edit_workshop.startAt }}" name="startAt" class="form-control"/>
+                                    <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-md-5'>
+                            <div class="form-group">
+                                <label for="startAt">Date de fin</label>
+                                <div class='input-group date' id='datetimepicker2'>
+                                    <input required type='text' value="{{ edit_workshop.endAt }}" name="endAt" class="form-control"/>
+                                    <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class='col-md-5'>
-                        <div class="form-group">
-                            <label for="startAt">Date de fin</label>
-                            <div class='input-group date' id='datetimepicker2'>
-                                <input type='datetime' name="endAt" value="{{ edit_workshop.endAt }}" class="form-control"/>
-                                <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Modifier un atelier</button>
                     </div>
-                </div>
-                <input type="submit" value="Éditer un atelier" class="btn btn-success">
-
-
-            </form>
+                </form>
+            </fieldset>
         </div>
     </div>
 

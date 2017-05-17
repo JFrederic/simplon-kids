@@ -11,11 +11,13 @@ namespace simplonkids\controllers;
 
 use Silex\Application;
 use simplonkids\model\Establishment;
+use simplonkids\model\Kid;
 use simplonkids\model\PublicAge;
 use simplonkids\model\Timetable;
 use simplonkids\model\Workshop;
 use simplonkids\model\WorkshopCategory;
 use Symfony\Component\HttpFoundation\Request;
+use simplonkids\model\WorkshopHasKids;
 
 class WorkshopController
 {
@@ -31,6 +33,8 @@ class WorkshopController
          $ages = $public_age->findAll();
          $categories = $workshop_category->findAll();
          $establishments = $establishment->findAll();
+
+
 
         return $app['twig']->render('workshop.html.twig',array(
             'workshops' => $workshops,
@@ -91,7 +95,7 @@ class WorkshopController
             $timetable->setWorkshopId($workshop_id);
             $timetable->addTimetable();
 
-            $app->redirect('/');
+            return $app->redirect('/workshops');
         }
 
         return $app['twig']->render('create_workshop.html.twig', array(
@@ -131,30 +135,26 @@ class WorkshopController
             elseif($visible == "false") {
                 $visible = 0;
             }
+            $workshop->setTitle($title);
+            $workshop->setDescription($description);
+            $workshop->setPrice($price);
+            $workshop->setMaxKids($max_kids);
+            $workshop->setImage($image);
+            $workshop->setVisible($visible);
+            $workshop->setPublicAgeId($public_age_id);
+            $workshop->setEstablishmentId($establishment_id);
+            $workshop->setWorkshopCategoryId($workshop_category_id);
+            $workshop->setId($id);
+            $workshop->editWorkshop();
 
-            $workshop_param = [
-                'title' => $title,
-                'description' => $description,
-                'price' => $price,
-                'max_kids' => $max_kids,
-                'image' => $image,
-                'visible' =>  $visible,
-                'public_age_id' => $public_age_id,
-                'establishment_id' => $establishment_id,
-                'workshop_category_id' => $workshop_category_id,
-            ];
+            $workshop_id = $workshop->getId();
+            $timetable->setStartAt($start);
+            $timetable->setEndAt($end);
+            $timetable->setEnable(0);
+            $timetable->setWorkshopId($workshop_id);
+            $timetable->editTimetable();
 
-            $workshop->setWorkshop($workshop_param,$id);
-
-            $timetable_param = [
-                'startAt' => $start,
-                'endAt' => $end,
-                'workshop_id' => $id,
-            ];
-
-            $timetable->setTimetable($timetable_param);
-
-//            $app->redirect('/');
+            return $app->redirect('/workshops');
         }
         $workshop = new Workshop();
         $edit_workshop = $workshop->findWorkshopById($id);
@@ -176,8 +176,46 @@ class WorkshopController
     {
         $id = $request->get('id');
         $workshop = new Workshop();
-        $workshop_id = $workshop->delete($id);
+        $workshop->delete($id);
+        return $app->redirect('/workshops');
+    }
+
+    public function WorkshopSubscriptionRequest(Application $app,Request $request) {
+
+        $workshop_has_kid = new WorkshopHasKids();
+        $workshop = new Workshop();
+        $kid = new Kid();
+
+        if ($app['session']->get('user')){
+            $subscription_request = $workshop_has_kid->findByNotValidated();
+            $workshops = $workshop->findAll();
+            $kids = $kid->findAll();
+            return $app['twig']->render('ask-list.html.twig', array (
+                'subscriptions_request' => $subscription_request ,
+                'workshops' => $workshops,
+                'kids' => $kids,
+                    )
+            );
+        }
         return $app->redirect('/');
+
+    }
+
+    public function validate(Application $app,$kid_id,$workshop_id){
+
+        $workshop_has_kid = new WorkshopHasKids();
+        $success = false;
+        if ($app['session']->get('user')) {
+            $workshop_has_kid->setValidated(1);
+            $workshop_has_kid->setKidId($kid_id);
+            $workshop_has_kid->setWorkshopId($workshop_id);
+            $workshop_has_kid->validation();
+            $success = true;
+            return $app['twig']->render('ask-list.html.twig', array(
+                'success' => $success,
+            ));
+        }
+
     }
 
 

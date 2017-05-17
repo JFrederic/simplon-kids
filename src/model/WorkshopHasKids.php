@@ -35,6 +35,26 @@ class WorkshopHasKids extends Model
         $stmt = $this->prepareExecute($sql,$arguments);
     }
 
+    public function findByNotValidated() {
+        $sql = 'SELECT * FROM workshop_has_kid WHERE validated = :validated';
+        $arguments = [
+            ':validated' => 0,
+        ];
+        return $this->prepareExecute($sql,$arguments)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function validation() {
+        $sql = 'UPDATE workshop_has_kid SET validated = :validated 
+                WHERE kid_id = :kid_id AND workshop_id = :workshop_id
+               ';
+        $arguments = [
+            'validated' => $this->getValidated(),
+            'kid_id' => $this->getKidId(),
+            'workshop_id' => $this->getWorkshopId(),
+        ];
+        $stmt = $this->prepareExecute($sql,$arguments);
+    }
+
     public function getWorkshopId(){
         return $this->workshop_id;
     }

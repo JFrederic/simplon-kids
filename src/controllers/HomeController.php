@@ -24,7 +24,6 @@ class HomeController
     {
         $workshop = new Workshop();
         $workshops = $workshop->findAll();
-
         return $app['twig']->render('homepage.html.twig',array(
             'workshops' => $workshops,
         ));

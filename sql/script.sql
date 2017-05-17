@@ -147,6 +147,13 @@
   )
   ENGINE = InnoDB;
 
+  CREATE TABLE IF NOT EXISTS `admin` (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    roles VARCHAR(255) )
+    ENGINE = InnoDB;
+
   -- kid table data
 
   INSERT INTO `kid`(firstname,lastname,birthday,classroom) VALUES
@@ -223,5 +230,9 @@
   (2,4,0,0),
   (3,1,0,0);
 
+  -- admin table data
+
+  INSERT INTO `admin` (username, password,roles) VALUES
+    ('admin', SHA1('admin'),'admin');
 
 
