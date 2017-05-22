@@ -220,28 +220,28 @@ class WorkshopController
 
 
 
-//    public function getWorkshopByPublicAge(Request $request,Application $app){
-//
-//
-//        if ($request->isMethod('post')){
-//            $age = $request->get('public_age');
-//            $workshop = new Workshop();
-//            $public_age = new PublicAge();
-//            $workshop_category = new WorkshopCategory();
-//            $establishment = new Establishment();
-//
-//            $workshops = $workshop->findWorkshopByPublicAge($age);
-//            $ages = $public_age->findAll();
-//            $categories = $workshop_category->findAll();
-//            $establishments = $establishment->findAll();
-//
-//            return $app['twig']->render('workshop.html.twig',array(
-//                'workshops' => $workshops,
-//                'ages' => $ages,
-//                'categories' => $categories,
-//                'establishments' => $establishments,
-//            ));
-//
-//        }
-//    }
+    public function getWorkshopByPublicAge(Request $request,Application $app){
+
+
+        if ($request->isMethod('post')){
+            $age = $request->get('public_age');
+            $workshop = new Workshop();
+            $public_age = new PublicAge();
+            $workshop_category = new WorkshopCategory();
+            $establishment = new Establishment();
+
+            $workshops = $workshop->findWorkshopByPublicAge($age);
+            $ages = $public_age->findAll();
+            $categories = $workshop_category->findAll();
+            $establishments = $establishment->findAll();
+
+            return $app['twig']->render('workshop.html.twig',array(
+                'workshops' => $workshops,
+                'ages' => $ages,
+                'categories' => $categories,
+                'establishments' => $establishments,
+            ));
+
+        }
+    }
 }

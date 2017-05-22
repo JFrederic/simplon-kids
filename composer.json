@@ -19,7 +19,10 @@
             "optimize-autoloader": true
         }
     },
-    "scripts":{
-        "start" : "php -S localhost:8080 -t web"
+    "scripts": {
+        "run": [
+            "echo 'Started web server on http://localhost:8080'",
+            "php -S localhost:8080 -t web"
+        ]
     }
 }

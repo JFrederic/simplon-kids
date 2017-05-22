@@ -21,7 +21,7 @@ require __DIR__.'/../config/prod.php';
 $app->get('/', 'simplonkids\controllers\HomeController::home');
 $app->match('/login','simplonkids\controllers\AdminController::login');
 $app->match('/logout','simplonkids\controllers\AdminController::logout');
-$app->get('/workshops', 'simplonkids\controllers\WorkshopController::show');
+$app->match('/workshops', 'simplonkids\controllers\WorkshopController::show');
 $app->match('/create/workshop', 'simplonkids\controllers\WorkshopController::create');
 $app->match('/edit/{id}', 'simplonkids\controllers\WorkshopController::edit');
 $app->match('delete/{id}','simplonkids\controllers\WorkshopController::delete');

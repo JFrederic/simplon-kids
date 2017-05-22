@@ -139,22 +139,22 @@ class Workshop extends Model
     }
 
 
-//    public function findWorkshopByPublicAge($age) {
-//
-//        $sql = 'SELECT * FROM `workshop` W
-//                JOIN public_age P
-//                ON W.public_age_id = P.id
-//                WHERE W.public_age_id = :age_id
-//                ';
-//
-//        $arguments = [
-//            ':age_id' => $age,
-//        ];
-//
-//        $stmt = $this->prepareExecute($sql,$arguments);
-//        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//        return $results;
-//    }
+    public function findWorkshopByPublicAge($age) {
+
+        $sql = 'SELECT * FROM `workshop` W
+                JOIN public_age P
+                ON W.public_age_id = P.id
+                WHERE W.public_age_id = :age_id
+                ';
+
+        $arguments = [
+            ':age_id' => $age,
+        ];
+
+        $stmt = $this->prepareExecute($sql,$arguments);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    }
 
 
 

@@ -4,7 +4,7 @@
     <div class="container margin-top90">
         <div class="row">
             <div class="form-group text-center form-inline">
-                <form method="post" id="filter" action="/workshops">
+                <form method="post" id="filter" action="">
                     <label for="vehicule">Trier par : </label>
                     <select name="public_age" onchange="document.getElementById('filter').submit()"
                             class="form-control mini-select">
@@ -62,5 +62,7 @@
     <p class="text-center">
         <a href="/create/workshop" style="margin-top: 80px;" class="btn btn-lg btn-primary ">Créer un atelier</a>
     </p>
+
+
 {% endblock %}
 
