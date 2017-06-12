@@ -42,17 +42,17 @@ class WorkshopHasKidsTest extends Setup
         $stmt = $this->prepareExecute($sql,[]);
     }
 
-    public function testFindByNotValidated(){
+    // public function testFindByNotValidated(){
 
-        $actual = $this->workshop_has_kid->findByNotValidated();
-        $expected = array(
-            array('workshop_id' => '1','kid_id' => '2','has_participated' => '0','validated' => '0'),
-            array('workshop_id' => '2','kid_id' => '4','has_participated' => '0','validated' => '0'),
-            array('workshop_id' => '3','kid_id' => '1','has_participated' => '0','validated' => '0')
-        );
-        $this->assertEquals($expected,$actual);
+    //     $actual = $this->workshop_has_kid->findByNotValidated();
+    //     $expected = array(
+    //         array('workshop_id' => '1','kid_id' => '2','has_participated' => '0','validated' => '0'),
+    //         array('workshop_id' => '2','kid_id' => '4','has_participated' => '0','validated' => '0'),
+    //         array('workshop_id' => '3','kid_id' => '1','has_participated' => '0','validated' => '0')
+    //     );
+    //     $this->assertEquals($expected,$actual);
 
-    }
+    // }
 
     public function testValidation() {
 
